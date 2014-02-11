@@ -1,0 +1,78 @@
+# depslib dependency file v1.0
+1392119412 source:/home/gmanfred/devel/ros/packs/som/som/FilesManager.cpp
+	"FilesManager.h"
+
+1392126138 /home/gmanfred/devel/ros/packs/som/som/FilesManager.h
+	<boost/filesystem.hpp>
+	<opencv2/core/core.hpp>
+	<opencv2/highgui/highgui.hpp>
+
+1392127256 source:/home/gmanfred/devel/ros/packs/som/som/Object.cpp
+	"Object.h"
+	<fstream>
+
+1392126915 /home/gmanfred/devel/ros/packs/som/som/Object.h
+	<iostream>
+	"View.h"
+
+1392127285 /home/gmanfred/devel/ros/packs/som/som/View.h
+	<iostream>
+	<opencv2/core/core.hpp>
+	<opencv2/features2d/features2d.hpp>
+	<opencv2/calib3d/calib3d.hpp>
+
+1392127232 source:/home/gmanfred/devel/ros/packs/som/som/View.cpp
+	"View.h"
+
+1392128260 source:/home/gmanfred/devel/ros/packs/som/som/detect.cpp
+	"som.h"
+	"FilesManager.h"
+
+1392122378 source:/home/gmanfred/devel/ros/packs/som/som/Pipeline2D.cpp
+	<cassert>
+	<opencv2/imgproc/imgproc.hpp>
+	<opencv2/nonfree/nonfree.hpp>
+	"Pipeline2D.h"
+
+1392122383 /home/gmanfred/devel/ros/packs/som/som/Pipeline2D.h
+	<iostream>
+	<opencv2/core/core.hpp>
+	<opencv2/features2d/features2d.hpp>
+	<GL/glew.h>
+	<GL/glut.h>
+	"/home/gmanfred/devel/sandbox/SiftGPU/src/SiftGPU/SiftGPU.h"
+
+1349298500 /home/gmanfred/devel/sandbox/SiftGPU/src/SiftGPU/SiftGPU.h
+
+1392114684 source:/home/gmanfred/devel/ros/packs/som/som/main.cpp
+	"som.h"
+
+1392124578 /home/gmanfred/devel/ros/packs/som/som/som.h
+	"Object.h"
+	"Pipeline2D.h"
+
+1392128254 source:/home/gmanfred/devel/ros/packs/som/som/modelise.cpp
+	"som.h"
+	"FilesManager.h"
+
+1392122461 source:/home/gmanfred/devel/ros/packs/som/som/sod.cpp
+	"sod.h"
+
+1392121866 /home/gmanfred/devel/ros/packs/som/som/sod.h
+	<opencv2/core/core.hpp>
+	"Object.h"
+	"Pipeline2D.h"
+	"PipelineGeom.h"
+
+1392124623 source:/home/gmanfred/devel/ros/packs/som/som/som.cpp
+	"som.h"
+
+1392120897 source:/home/gmanfred/devel/ros/packs/som/som/PipelineGeom.cpp
+	"PipelineGeom.h"
+	"opencv2/core/core_c.h"
+
+1392121686 /home/gmanfred/devel/ros/packs/som/som/PipelineGeom.h
+	<iostream>
+	<opencv2/calib3d/calib3d.hpp>
+	"Object.h"
+
