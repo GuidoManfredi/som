@@ -14,8 +14,10 @@ class View
                              cv::Mat &points3d);
     void points2dFromMatches (std::vector<cv::DMatch> matches,
                              cv::Mat &points2d);
-    double reprojectionError (const cv::Mat Rov, const cv::Mat tov, const cv::Mat points3d, const cv::Mat points2d);
-    double reprojectionError (const cv::Mat points3d, const cv::Mat points2d);
+    float reprojectionError (const cv::Mat Rov, const cv::Mat tov, const cv::Mat points3d, const cv::Mat points2d);
+    float reprojectionError (const cv::Mat Rov, const cv::Mat tov, const cv::Mat K, const cv::Mat points3d, const cv::Mat points2d);
+    float reprojectionError (const cv::Mat points3d, const cv::Mat points2d);
+    cv::Mat transform2Object ();
 
     void write (cv::FileStorage& fs) const;
     void read (const cv::FileNode& node);

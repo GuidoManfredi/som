@@ -7,6 +7,8 @@
 #include <pcl_ros/point_cloud.h>
 #include <pcl/point_types.h>
 
+#include "opencv_display/LocaPose.h"
+
 #include "sod.h"
 #include "FilesManager.h"
 
@@ -17,9 +19,10 @@ namespace enc = sensor_msgs::image_encodings;
 
 Sod detecter;
 Object object;
-Mat P (4, 4, CV_32F);
+Mat P = Mat::eye(4, 4, CV_32F);
 
 Object loadObject (char* path);
+opencv_display::LocaPose mat2msg (Mat P);
 
 void cloud_callback(const sensor_msgs::PointCloud2& msg) {
 	PointCloud<PointXYZRGB>::Ptr cloud (new PointCloud<PointXYZRGB>);
@@ -42,29 +45,34 @@ void cloud_callback(const sensor_msgs::PointCloud2& msg) {
             image.at<Vec3b>(y, x)[2] = ((rgb >> 16) & 0xff); // R
 		}
 	}
-    int start = cv::getTickCount();
-	detecter.process (image, depth);
-    int end = cv::getTickCount();
-    float time_period = 1/cv::getTickFrequency();
-    ROS_INFO("Procesing time: %f s.", (end - start)*time_period);
-}
 
+	//imshow ("Input", image);
+    //waitKey(1);
+    int start = cv::getTickCount();
+    P = detecter.process (image, depth);
+    P = P.inv(); // for display
+    cout << P << endl;
+    int end = cv::getTickCount();
+    float time_period = 1 / cv::getTickFrequency();
+    ROS_INFO("Procesing time: %f s.", (end - start) * time_period);
+}
 // ./bin/detect_model /camera/depth_registered/points pose purfruit
+// rosrun opencv_display display_poses /camera/rgb/image_rect_color pose
 int main (int argc, char** argv) {
 	assert (argc == 4 && "Usage : detect_objects in_registered_cloud_topic out_pose_topic object_name");
-
-	ros::init(argc, argv, "POD");
+	ros::init(argc, argv, "som");
 	ros::NodeHandle n;
 	ros::Subscriber cloud_subscriber = n.subscribe(argv[1], 1, cloud_callback);
-	//ros::Publisher pose_publisher = n.advertise<geometry_msgs::PoseStamped>(argv[2], 1);
+	ros::Publisher pose_publisher = n.advertise<opencv_display::LocaPose>(argv[2], 1);
 
-    Object object = loadObject (argv[4]);
+    Object object = loadObject (argv[3]);
     detecter.setObject (object);
-
 	while (ros::ok()) {
         ros::spinOnce();
 
-   	    //pose_publisher.publish(pose);
+        opencv_display::LocaPose msg;
+        msg = mat2msg (P);
+   	    pose_publisher.publish(msg);
     }
 
     return 0;
@@ -79,3 +87,10 @@ Object loadObject (char* path) {
     return object;
 }
 
+opencv_display::LocaPose mat2msg (Mat P) {
+    opencv_display::LocaPose msg;
+    msg.t00 = P.at<float>(0, 0);    msg.t01 = P.at<float>(0, 1);    msg.t02 = P.at<float>(0, 2);    msg.t03 = P.at<float>(0, 3);
+    msg.t10 = P.at<float>(1, 0);    msg.t11 = P.at<float>(1, 1);    msg.t12 = P.at<float>(1, 2);    msg.t13 = P.at<float>(1, 3);
+    msg.t20 = P.at<float>(2, 0);    msg.t21 = P.at<float>(2, 1);    msg.t22 = P.at<float>(2, 2);    msg.t23 = P.at<float>(2, 3);
+    return msg;
+}

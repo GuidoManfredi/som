@@ -11,36 +11,46 @@ void Sod::setObject (Object object) {
     object_ = object;
 }
 
-void Sod::process (Mat image, Mat depth) {
+Mat Sod::process (const Mat image, const Mat depth) {
     View view = createView (image, depth);
-    process (view);
+    return process (view);
 }
 
-void Sod::process (View current) {
+Mat Sod::process (View &current) {
     vector<vector<DMatch> > matches;
     View best_view;
-    int best_index;
-    double min_reprojection_error = 0;
+    int best_index = -1;
+    float min_reprojection_error = 1000;
     match (current, object_.views_, matches);
     for ( size_t i = 0; i < matches.size(); ++i ) {
-        double reprojection_error = 0;
+        float reprojection_error = 0;
         View tmp_view = object_.views_[i];
         if ( !object_.views_[i].initialised ) {
+            cout << "Completing train image." << endl;
             reprojection_error = pipelineGeom_.computeTrainPose (current, tmp_view, matches[i]);
         } else {
+            cout << "Computing for current image." << endl;
+            //imshow ("Online training view", current.view_);
+            //waitKey(0);
             reprojection_error = pipelineGeom_.computeCurrentPose (current, tmp_view, matches[i]);
         }
 
-        if ( reprojection_error < min_reprojection_error ) {
+        if ( reprojection_error < min_reprojection_error
+            && reprojection_error > 0 ) {
             best_view = tmp_view;
             best_index = i;
             min_reprojection_error = reprojection_error;
         }
     }
-    object_.views_[best_index].initialised = true;
+
     object_.views_[best_index] = best_view;
-    cout << best_view.Rov_ << endl;
-    cout << best_view.tov_ << endl;
+    if ( !object_.views_[best_index].initialised )
+        object_.views_[best_index].initialised = true;
+
+    cout << "Min reprojection error " << min_reprojection_error << endl;
+    cout << "Best index " << best_index << endl;
+
+    return current.transform2Object ();
 }
 
 void Sod::match (View current, vector<View> trains, vector<vector<DMatch> > &matches) {
@@ -52,9 +62,13 @@ void Sod::match (View current, vector<View> trains, vector<vector<DMatch> > &mat
     }
 }
 
-void Sod::match (View current, View train, vector<DMatch> matches) {
+void Sod::match (View current, View train, vector<DMatch> &matches) {
     matches.clear ();
+
     pipeline2d_.match (current.descriptors_, train.descriptors_, matches);
+//    cout << current.descriptors_.size() << endl;
+//    cout << train.descriptors_.size() << endl;
+//    cout << "Matches : " << matches.size() << endl;
 }
 
 View Sod::createView (Mat image, Mat depth) {
@@ -68,7 +82,7 @@ View Sod::createView (Mat image, Mat depth) {
     pipeline2d_.filterNaNKeyPoints (depth, raw_keypoints,
                                     keypoints_index, view.keypoints_, points3d);
     Mat(points3d).copyTo(view.points3d_);
-    pipeline2d_.extractDescriptors (image, keypoints_index, view.descriptors_);
+    pipeline2d_.extractDescriptors (view.view_, keypoints_index, view.descriptors_);
 
     return view;
 }

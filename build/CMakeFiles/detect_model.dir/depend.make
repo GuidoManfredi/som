@@ -62,6 +62,7 @@ CMakeFiles/detect_model.dir/som/View.cpp.o: /opt/ros/hydro/include/opencv2/flann
 CMakeFiles/detect_model.dir/som/View.cpp.o: /opt/ros/hydro/include/opencv2/flann/defines.h
 CMakeFiles/detect_model.dir/som/View.cpp.o: /opt/ros/hydro/include/opencv2/flann/miniflann.hpp
 
+CMakeFiles/detect_model.dir/som/detect.cpp.o: /home/gmanfred/devel/ros/my_packs/opencv_util/opencv_display/msg_gen/cpp/include/opencv_display/LocaPose.h
 CMakeFiles/detect_model.dir/som/detect.cpp.o: ../som/FilesManager.h
 CMakeFiles/detect_model.dir/som/detect.cpp.o: ../som/Object.h
 CMakeFiles/detect_model.dir/som/detect.cpp.o: ../som/Pipeline2D.h
@@ -386,6 +387,7 @@ CMakeFiles/detect_model.dir/som/sod.cpp.o: ../som/sod.h
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /home/gmanfred/devel/sandbox/SiftGPU/src/SiftGPU/SiftGPU.h
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/calib3d/calib3d.hpp
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/core/core.hpp
+CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/core/core_c.h
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/core/mat.hpp
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/core/operations.hpp
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/core/types_c.h
@@ -394,4 +396,6 @@ CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/featur
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/flann/config.h
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/flann/defines.h
 CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/flann/miniflann.hpp
+CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/highgui/highgui.hpp
+CMakeFiles/detect_model.dir/som/sod.cpp.o: /opt/ros/hydro/include/opencv2/highgui/highgui_c.h
 

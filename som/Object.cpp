@@ -8,7 +8,7 @@ using namespace cv;
 Object::Object () {}
 
 void Object::write(cv::FileStorage& fs) const {
-    cout << "kikou write object" << endl;
+    cout << "Writing object" << endl;
     int number_views = views_.size();
     fs << "{" << "number_views" << number_views;
     for ( int i = 0; i < number_views; ++i ) {
@@ -20,7 +20,7 @@ void Object::write(cv::FileStorage& fs) const {
 }
 
 void Object::read(const FileNode& node) {
-    cout << "kikou read object" << endl;
+    cout << "Reading object" << endl;
     int number_views = 0;
     node["number_views"] >> number_views;
     views_.resize(number_views);

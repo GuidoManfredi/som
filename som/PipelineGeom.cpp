@@ -7,48 +7,59 @@ using namespace cv;
 
 PipelineGeom::PipelineGeom () {}
 
-double PipelineGeom::computeTrainPose (View current, View &train, vector<DMatch> matches) {
+float PipelineGeom::computeTrainPose (View current, View &train, vector<DMatch> matches) {
     if ( matches.size() < 4) {
         cout << "ComputeTrainPose : not enought matches (" << matches.size() << ")." << endl;
         return -1;
     }
-
     Mat points2d, kinect_points3d;
     train.points2dFromMatches (matches, points2d);
     current.points3dFromMatches (matches, kinect_points3d);
-
+    //cout << "Pose 2d: " << points2d.size() << endl;
+    //cout << "Pose 3d: " << kinect_points3d.size() << endl;
     Mat Rov, tov;
     object2viewFrame (kinect_points3d,
                       Rov, tov);
     // transform 3d points from camera to object object frame
     Mat object_points3d;
-    Mat Rvo = Rov.t();
-    Mat tvo = -tov;
+    Mat Pov = Rt2P(Rov, tov);
+    Mat Pvo = Pov.inv();
+    Mat Rvo, tvo;
+    P2Rt (Pvo, Rvo, tvo);
     transform (kinect_points3d, Rvo, tvo,
                object_points3d);
     //cout << object_points3d << endl;
     //cout << points2d << endl;
-    mySolvePnP (object_points3d, points2d, train.K_, train.Rov_, train.tov_);
-
-    double reprojection_error = train.reprojectionError (object_points3d, points2d);
+    Mat p3d_inliers, p2d_inliers;
+    mySolvePnP (object_points3d, points2d, train.K_, train.Rov_, train.tov_,
+                p3d_inliers, p2d_inliers);
+    float reprojection_error = train.reprojectionError (p3d_inliers, p2d_inliers);
+    cout << "Reprojection error train pose: " << reprojection_error << endl;
     return reprojection_error;
-    cout << "OpenCV reprojection error train pose: " << reprojection_error << endl;
 }
 
-double PipelineGeom::computeCurrentPose (View &current, View train, vector<DMatch> matches) {
-    Mat points2d, camera_points3d, world_points3d;
+float PipelineGeom::computeCurrentPose (View &current, View train, vector<DMatch> matches) {
+    if ( matches.size() < 4) {
+        cout << "ComputeTrainPose : not enought matches (" << matches.size() << ")." << endl;
+        return -1;
+    }
+    Mat points2d, camera_points3d;
     train.points2dFromMatches (matches, points2d);
     current.points3dFromMatches (matches, camera_points3d);
 
     Mat RR, tt;
-    mySolvePnP (camera_points3d, points2d, train.K_, RR, tt);
+    Mat p3d_inliers, p2d_inliers;
+    mySolvePnP (camera_points3d, points2d, train.K_, RR, tt,
+                p3d_inliers, p2d_inliers);
     // convert A = P * (P')-1 to P' with P' = A-1 * P
-    Mat PP = Rt2P (RR, tt);
+    Mat A = Rt2P (RR, tt);
     Mat P = Rt2P (train.Rov_, train.tov_);
-    Mat P2 = PP.inv() * P;
+    Mat P2 = A.inv() * P;
     P2Rt (P2, current.Rov_, current.tov_);
+    //current.tov_ = current.Rov_ * current.tov_.t();
 
-    double reprojection_error = current.reprojectionError (RR, tt, camera_points3d, points2d);
+    float reprojection_error = current.reprojectionError (RR, tt, train.K_, p3d_inliers, p2d_inliers);
+    cout << "Reprojection error current pose: " << reprojection_error << endl;
     return reprojection_error;
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -56,55 +67,77 @@ double PipelineGeom::computeCurrentPose (View &current, View train, vector<DMatc
 ////////////////////////////////////////////////////////////////////////////////
 void PipelineGeom::object2viewFrame (Mat points3d, Mat &Rov, Mat &tov) {
     // compute object to points frame transform
-    tov = Mat::zeros(1, 3, CV_64F);
+    tov = Mat::zeros(1, 3, CV_32F);
     reduce (points3d, tov, 0, CV_REDUCE_AVG);
-    Rov = Mat::eye (3, 3, CV_64F); // keep same rotation as current camera
+    Rov = Mat::eye (3, 3, CV_32F); // keep same rotation as current camera
 }
 
-void PipelineGeom::mySolvePnP (Mat p3d, Mat p2d, Mat K, Mat &Rov, Mat &tov) {
-    Mat rvec = Mat::zeros (1, 3, CV_64F);
-    tov = Mat::zeros (1, 3, CV_64F);
-
-    solvePnPRansac (p3d, p2d, K, vector<double>(), rvec, tov);
-
+void PipelineGeom::mySolvePnP (Mat p3d, Mat p2d, Mat K,
+                               Mat &Rov, Mat &tov,
+                               Mat &p3d_inliers, Mat &p2d_inliers) {
+    Mat rvec = Mat::zeros (1, 3, CV_32F);
+    Rov = Mat::eye (3, 3, CV_32F);
+    tov = Mat::zeros (1, 3, CV_32F);
+//    cout << p3d << endl;
+//    cout << p2d << endl;
+    vector<int> inliers_idx;
+    solvePnPRansac (p3d, p2d, K, vector<float>(), rvec, tov,
+                    false, 1000, 8.0, p3d.rows*0.8, inliers_idx, CV_EPNP); // 80% inliers
+    // Reffine with LM
+    if ( inliers_idx.size() > 4 ) {
+//    cout << inliers_idx.size() << endl;
+//    cout << p3d_inliers.size() << endl;
+//    cout << p2d_inliers.size() << endl;
+        pointsFromIndex (p3d, p2d, inliers_idx, p3d_inliers, p2d_inliers);
+        solvePnP (p3d_inliers, p2d_inliers, K, vector<float>(), rvec, tov, true);
+    } else {
+        p3d_inliers = p3d;
+        p2d_inliers = p2d;
+    }
+//    cout << "Result" << endl;
+//    cout << rvec << endl;
+//    cout << tov << endl;
     Rodrigues (rvec, Rov);
+
+    Rov.convertTo (Rov, CV_32F);
+    tov.convertTo (tov, CV_32F);
 }
 
 void PipelineGeom::P2Rt (Mat P, Mat &R, Mat &t) {
-    R.at<double>(0,0) = P.at<double>(0,0);
-    R.at<double>(0,1) = P.at<double>(0,1);
-    R.at<double>(0,2) = P.at<double>(0,2);
-    t.at<double>(0) = P.at<double>(0, 3);
+    R = Mat::eye(3, 3, CV_32F);
+    t = Mat::zeros(1, 3, CV_32F);
+    R.at<float>(0,0) = P.at<float>(0,0);
+    R.at<float>(0,1) = P.at<float>(0,1);
+    R.at<float>(0,2) = P.at<float>(0,2);
+    t.at<float>(0) = P.at<float>(0,3);
 
-    R.at<double>(1,0) = P.at<double>(1,0);
-    R.at<double>(1,1) = P.at<double>(1,1);
-    R.at<double>(1,2) = P.at<double>(1,2);
-    t.at<double>(1) = P.at<double>(1,3);
+    R.at<float>(1,0) = P.at<float>(1,0);
+    R.at<float>(1,1) = P.at<float>(1,1);
+    R.at<float>(1,2) = P.at<float>(1,2);
+    t.at<float>(1) = P.at<float>(1,3);
 
-    R.at<double>(2,0) = P.at<double>(2,0);
-    R.at<double>(2,1) = P.at<double>(2,1);
-    R.at<double>(2,2) = P.at<double>(2,2);
-    t.at<double>(2) = P.at<double>(2,3);
+    R.at<float>(2,0) = P.at<float>(2,0);
+    R.at<float>(2,1) = P.at<float>(2,1);
+    R.at<float>(2,2) = P.at<float>(2,2);
+    t.at<float>(2) = P.at<float>(2,3);
 }
 
 Mat PipelineGeom::Rt2P (Mat R, Mat t) {
-    Mat P = Mat::zeros(4, 4, CV_64F);
-    P.at<double>(0,0) = R.at<double>(0,0);
-    P.at<double>(0,1) = R.at<double>(0,1);
-    P.at<double>(0,2) = R.at<double>(0,2);
-    P.at<double>(0,3) = t.at<double>(0);
+    Mat P = Mat::eye(4, 4, CV_32F);
+    P.at<float>(0,0) = R.at<float>(0,0);
+    P.at<float>(0,1) = R.at<float>(0,1);
+    P.at<float>(0,2) = R.at<float>(0,2);
+    P.at<float>(0,3) = t.at<float>(0);
 
-    P.at<double>(1,0) = R.at<double>(1,0);
-    P.at<double>(1,1) = R.at<double>(1,1);
-    P.at<double>(1,2) = R.at<double>(1,2);
-    P.at<double>(1,3) = t.at<double>(1);
+    P.at<float>(1,0) = R.at<float>(1,0);
+    P.at<float>(1,1) = R.at<float>(1,1);
+    P.at<float>(1,2) = R.at<float>(1,2);
+    P.at<float>(1,3) = t.at<float>(1);
 
-    P.at<double>(2,0) = R.at<double>(2,0);
-    P.at<double>(2,1) = R.at<double>(2,1);
-    P.at<double>(2,2) = R.at<double>(2,2);
-    P.at<double>(2,3) = t.at<double>(2);
-
-    P.at<double>(3,3) = 1;
+    P.at<float>(2,0) = R.at<float>(2,0);
+    P.at<float>(2,1) = R.at<float>(2,1);
+    P.at<float>(2,2) = R.at<float>(2,2);
+    P.at<float>(2,3) = t.at<float>(2);
 
     return P;
 }
@@ -112,7 +145,7 @@ Mat PipelineGeom::Rt2P (Mat R, Mat t) {
 void PipelineGeom::transform (cv::Mat points3d, cv::Mat R, cv::Mat t,
                 cv::Mat &points3d_out) {
     int n = points3d.rows;
-    points3d_out = Mat (n, 3, CV_64F);
+    points3d_out = Mat (n, 3, CV_32F);
     for ( int i = 0; i < n; ++i ) {
         // produit de transposé : (R * pt.t() + t.t()).t() == pt * R.t() + t
         Mat res = points3d.row(i) * R.t() + t;
@@ -122,10 +155,21 @@ void PipelineGeom::transform (cv::Mat points3d, cv::Mat R, cv::Mat t,
 
 void PipelineGeom::getBarycentre (Mat points3d,
                                   Mat &t) {
-    t = Mat::zeros (1, 3, CV_64F);
-    double n = points3d.rows;
+    t = Mat::zeros (1, 3, CV_32F);
+    float n = points3d.rows;
     for ( int i = 0; i < n; ++i ) {
         t += points3d.row(i);
     }
     t /= n;
+}
+
+void PipelineGeom::pointsFromIndex (Mat p3d, Mat p2d, vector<int> inliers,
+                                    Mat &p3d_inliers, Mat &p2d_inliers) {
+    p3d_inliers = Mat::zeros (inliers.size(), 3, CV_32F);
+    p2d_inliers = Mat::zeros (inliers.size(), 2, CV_32F);
+    for ( size_t n = 0; n < inliers.size(); ++n ) {
+        int idx = inliers[n];
+        p3d_inliers.at<Point3f>(n) = p3d.at<Point3f>(idx);
+        p2d_inliers.at<Point2f>(n) = p2d.at<Point2f>(idx);
+    }
 }

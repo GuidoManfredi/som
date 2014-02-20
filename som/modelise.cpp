@@ -8,7 +8,7 @@ Object model (string dir);
 
 Som modeler;
 
-// ./bin/create_model /home/gmanfred/devel/datasets/my_objects/purfruit/
+// ./bin/create_model /home/gmanfred/devel/datasets/my_objects/purfruit
 
 int main (int argc, char** argv) {
     Object object = model (argv[1]);
