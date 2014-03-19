@@ -12,19 +12,11 @@ iostream
 View.h
 /home/gmanfred/devel/ros/packs/som/som/View.h
 
-/home/gmanfred/devel/ros/packs/som/som/Pipeline2D.h
-iostream
--
-opencv2/core/core.hpp
--
-opencv2/features2d/features2d.hpp
--
-GL/glew.h
--
-GL/glut.h
--
-/home/gmanfred/devel/sandbox/SiftGPU/src/SiftGPU/SiftGPU.h
--
+/home/gmanfred/devel/ros/packs/som/som/PipelineGeom.cpp
+PipelineGeom.h
+/home/gmanfred/devel/ros/packs/som/som/PipelineGeom.h
+opencv2/core/core_c.h
+/home/gmanfred/devel/ros/packs/som/som/opencv2/core/core_c.h
 
 /home/gmanfred/devel/ros/packs/som/som/PipelineGeom.h
 iostream
@@ -43,24 +35,6 @@ opencv2/features2d/features2d.hpp
 -
 opencv2/calib3d/calib3d.hpp
 -
-
-/home/gmanfred/devel/ros/packs/som/som/sod.cpp
-sod.h
-/home/gmanfred/devel/ros/packs/som/som/sod.h
-
-/home/gmanfred/devel/ros/packs/som/som/sod.h
-opencv2/core/core.hpp
--
-opencv2/highgui/highgui.hpp
--
-Object.h
-/home/gmanfred/devel/ros/packs/som/som/Object.h
-Pipeline2D.h
-/home/gmanfred/devel/ros/packs/som/som/Pipeline2D.h
-PipelineGeom.h
-/home/gmanfred/devel/ros/packs/som/som/PipelineGeom.h
-
-/home/gmanfred/devel/sandbox/SiftGPU/src/SiftGPU/SiftGPU.h
 
 /opt/ros/hydro/include/opencv2/calib3d/calib3d.hpp
 opencv2/core/core.hpp
@@ -169,14 +143,4 @@ opencv2/core/core.hpp
 /opt/ros/hydro/include/opencv2/flann/opencv2/core/core.hpp
 opencv2/flann/defines.h
 /opt/ros/hydro/include/opencv2/flann/opencv2/flann/defines.h
-
-/opt/ros/hydro/include/opencv2/highgui/highgui.hpp
-opencv2/core/core.hpp
-/opt/ros/hydro/include/opencv2/highgui/opencv2/core/core.hpp
-opencv2/highgui/highgui_c.h
-/opt/ros/hydro/include/opencv2/highgui/opencv2/highgui/highgui_c.h
-
-/opt/ros/hydro/include/opencv2/highgui/highgui_c.h
-opencv2/core/core_c.h
-/opt/ros/hydro/include/opencv2/highgui/opencv2/core/core_c.h
 

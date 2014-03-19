@@ -15,13 +15,13 @@
 	<iostream>
 	"View.h"
 
-1392205920 /home/gmanfred/devel/ros/packs/som/som/View.h
+1392211138 /home/gmanfred/devel/ros/packs/som/som/View.h
 	<iostream>
 	<opencv2/core/core.hpp>
 	<opencv2/features2d/features2d.hpp>
 	<opencv2/calib3d/calib3d.hpp>
 
-1392194456 source:/home/gmanfred/devel/ros/packs/som/som/View.cpp
+1392382564 source:/home/gmanfred/devel/ros/packs/som/som/View.cpp
 	"View.h"
 
 1392128260 source:/home/gmanfred/devel/ros/packs/som/som/detect.cpp
@@ -75,4 +75,14 @@
 	<iostream>
 	<opencv2/calib3d/calib3d.hpp>
 	"Object.h"
+
+1395237912 source:/home/gmanfred/devel/ros/packs/som/som/Calibrate.cpp
+	"Calibrate.h"
+	<opencv2/core/core_c.h>
+
+1395236674 /home/gmanfred/devel/ros/packs/som/som/Calibrate.h
+	"common.h"
+
+1395237868 /home/gmanfred/devel/ros/packs/som/som/common.h
+	<opencv2/core/core.hpp>
 

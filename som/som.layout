@@ -7,25 +7,25 @@
 	<File name="Object.h" open="0" top="0" tabpos="0">
 		<Cursor position="248" topLine="0" />
 	</File>
-	<File name="PipelineGeom.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="858" topLine="0" />
+	<File name="PipelineGeom.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="3763" topLine="72" />
 	</File>
 	<File name="View.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1960" topLine="42" />
 	</File>
-	<File name="View.h" open="1" top="0" tabpos="5">
-		<Cursor position="0" topLine="8" />
+	<File name="View.h" open="1" top="0" tabpos="4">
+		<Cursor position="0" topLine="4" />
 	</File>
-	<File name="detect.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="1449" topLine="38" />
+	<File name="detect.cpp" open="1" top="0" tabpos="6">
+		<Cursor position="234" topLine="0" />
 	</File>
-	<File name="modelise.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="199" topLine="0" />
+	<File name="modelise.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="841" topLine="2" />
 	</File>
-	<File name="sod.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="958" topLine="12" />
+	<File name="sod.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="302" topLine="0" />
 	</File>
-	<File name="sod.h" open="1" top="0" tabpos="3">
+	<File name="sod.h" open="1" top="0" tabpos="2">
 		<Cursor position="80" topLine="0" />
 	</File>
 	<File name="som.cpp" open="0" top="0" tabpos="0">

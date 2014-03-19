@@ -33,4 +33,3 @@ Object model (string dir) {
 
     return object;
 }
-
