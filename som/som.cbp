@@ -42,6 +42,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Calibrate.cpp" />
+		<Unit filename="Calibrate.h" />
 		<Unit filename="FilesManager.cpp" />
 		<Unit filename="FilesManager.h" />
 		<Unit filename="Object.cpp" />
@@ -52,6 +54,7 @@
 		<Unit filename="PipelineGeom.h" />
 		<Unit filename="View.cpp" />
 		<Unit filename="View.h" />
+		<Unit filename="common.h" />
 		<Unit filename="detect.cpp" />
 		<Unit filename="modelise.cpp" />
 		<Unit filename="sod.cpp" />

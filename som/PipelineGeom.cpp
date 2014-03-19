@@ -103,6 +103,11 @@ void PipelineGeom::object2viewFrame (Mat points3d, Mat &Rov, Mat &tov) {
     Rov = Mat::eye (3, 3, CV_32F); // keep same rotation as current camera
 }
 
+void PipelineGeom::solveCalibration (cv::Mat points3d, cv::Mat points2d,
+                                        cv::Mat &K, cv::Mat &R, cv::Mat &t) {
+    solveCalibrateLinear (points3d, points2d, K, R, t);
+}
+
 void PipelineGeom::mySolvePnP (Mat p3d, Mat p2d, Mat K,
                                Mat &Rov, Mat &tov,
                                Mat &p3d_inliers, Mat &p2d_inliers) {

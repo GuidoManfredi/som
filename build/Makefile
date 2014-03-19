@@ -438,6 +438,33 @@ gtest_main/fast:
 	$(MAKE) -f gtest/CMakeFiles/gtest_main.dir/build.make gtest/CMakeFiles/gtest_main.dir/build
 .PHONY : gtest_main/fast
 
+som/Calibrate.o: som/Calibrate.cpp.o
+.PHONY : som/Calibrate.o
+
+# target to build an object file
+som/Calibrate.cpp.o:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/Calibrate.cpp.o
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/Calibrate.cpp.o
+.PHONY : som/Calibrate.cpp.o
+
+som/Calibrate.i: som/Calibrate.cpp.i
+.PHONY : som/Calibrate.i
+
+# target to preprocess a source file
+som/Calibrate.cpp.i:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/Calibrate.cpp.i
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/Calibrate.cpp.i
+.PHONY : som/Calibrate.cpp.i
+
+som/Calibrate.s: som/Calibrate.cpp.s
+.PHONY : som/Calibrate.s
+
+# target to generate assembly for a file
+som/Calibrate.cpp.s:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/Calibrate.cpp.s
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/Calibrate.cpp.s
+.PHONY : som/Calibrate.cpp.s
+
 som/FilesManager.o: som/FilesManager.cpp.o
 .PHONY : som/FilesManager.o
 
@@ -566,6 +593,33 @@ som/View.cpp.s:
 	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/View.cpp.s
 	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/View.cpp.s
 .PHONY : som/View.cpp.s
+
+som/common.o: som/common.cpp.o
+.PHONY : som/common.o
+
+# target to build an object file
+som/common.cpp.o:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/common.cpp.o
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/common.cpp.o
+.PHONY : som/common.cpp.o
+
+som/common.i: som/common.cpp.i
+.PHONY : som/common.i
+
+# target to preprocess a source file
+som/common.cpp.i:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/common.cpp.i
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/common.cpp.i
+.PHONY : som/common.cpp.i
+
+som/common.s: som/common.cpp.s
+.PHONY : som/common.s
+
+# target to generate assembly for a file
+som/common.cpp.s:
+	$(MAKE) -f CMakeFiles/create_model.dir/build.make CMakeFiles/create_model.dir/som/common.cpp.s
+	$(MAKE) -f CMakeFiles/detect_model.dir/build.make CMakeFiles/detect_model.dir/som/common.cpp.s
+.PHONY : som/common.cpp.s
 
 som/detect.o: som/detect.cpp.o
 .PHONY : som/detect.o
@@ -698,6 +752,9 @@ help:
 	@echo "... tests"
 	@echo "... gtest"
 	@echo "... gtest_main"
+	@echo "... som/Calibrate.o"
+	@echo "... som/Calibrate.i"
+	@echo "... som/Calibrate.s"
 	@echo "... som/FilesManager.o"
 	@echo "... som/FilesManager.i"
 	@echo "... som/FilesManager.s"
@@ -713,6 +770,9 @@ help:
 	@echo "... som/View.o"
 	@echo "... som/View.i"
 	@echo "... som/View.s"
+	@echo "... som/common.o"
+	@echo "... som/common.i"
+	@echo "... som/common.s"
 	@echo "... som/detect.o"
 	@echo "... som/detect.i"
 	@echo "... som/detect.s"

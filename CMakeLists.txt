@@ -34,7 +34,9 @@ rosbuild_add_executable(create_model  som/modelise.cpp
                                       som/Object.cpp
                                       som/View.cpp                                      
                                       som/Pipeline2D.cpp
-                                      som/FilesManager.cpp)
+                                      som/FilesManager.cpp
+                                      som/Calibrate.cpp
+                                      som/common.cpp)
 target_link_libraries(create_model /home/gmanfred/devel/sandbox/SiftGPU/bin/libsiftgpu.so)
 
 rosbuild_add_executable(detect_model  som/detect.cpp
@@ -42,5 +44,7 @@ rosbuild_add_executable(detect_model  som/detect.cpp
                                       som/Object.cpp
                                       som/View.cpp                                      
                                       som/Pipeline2D.cpp
-                                      som/PipelineGeom.cpp)
+                                      som/PipelineGeom.cpp
+                                      som/Calibrate.cpp
+                                      som/common.cpp)
 target_link_libraries(detect_model /home/gmanfred/devel/sandbox/SiftGPU/bin/libsiftgpu.so)

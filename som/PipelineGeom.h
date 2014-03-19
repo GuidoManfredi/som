@@ -1,6 +1,6 @@
 #pragma once
-#include <iostream>
 
+#include <iostream>
 #include <opencv2/calib3d/calib3d.hpp>
 
 #include "Object.h"
@@ -10,7 +10,6 @@ class PipelineGeom
 {
   public:
     PipelineGeom ();
-    void process (Object object, View current);
     float computeTrainPoseNotCalibrated (View current, View &train, std::vector<cv::DMatch> matches);
     float computeTrainPose (View current, View &train, std::vector<cv::DMatch> matches);
     float computeCurrentPose (View &current, View train, std::vector<cv::DMatch> matches);

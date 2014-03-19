@@ -5,6 +5,8 @@ FILE(REMOVE_RECURSE
   "CMakeFiles/detect_model.dir/som/View.cpp.o"
   "CMakeFiles/detect_model.dir/som/Pipeline2D.cpp.o"
   "CMakeFiles/detect_model.dir/som/PipelineGeom.cpp.o"
+  "CMakeFiles/detect_model.dir/som/Calibrate.cpp.o"
+  "CMakeFiles/detect_model.dir/som/common.cpp.o"
   "../bin/detect_model.pdb"
   "../bin/detect_model"
 )
