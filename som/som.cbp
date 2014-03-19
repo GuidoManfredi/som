@@ -54,6 +54,7 @@
 		<Unit filename="PipelineGeom.h" />
 		<Unit filename="View.cpp" />
 		<Unit filename="View.h" />
+		<Unit filename="common.cpp" />
 		<Unit filename="common.h" />
 		<Unit filename="detect.cpp" />
 		<Unit filename="modelise.cpp" />

@@ -1,34 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
+	<File name="Calibrate.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="2536" topLine="45" />
+	</File>
+	<File name="Calibrate.h" open="1" top="0" tabpos="5">
+		<Cursor position="32" topLine="0" />
+	</File>
 	<File name="Object.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="546" topLine="1" />
 	</File>
 	<File name="Object.h" open="0" top="0" tabpos="0">
 		<Cursor position="248" topLine="0" />
 	</File>
-	<File name="PipelineGeom.cpp" open="1" top="1" tabpos="3">
-		<Cursor position="3763" topLine="72" />
+	<File name="Pipeline2D.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="17" />
+	</File>
+	<File name="Pipeline2D.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="23" />
+	</File>
+	<File name="PipelineGeom.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="4389" topLine="2" />
+	</File>
+	<File name="PipelineGeom.h" open="1" top="0" tabpos="4">
+		<Cursor position="33" topLine="0" />
 	</File>
 	<File name="View.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1960" topLine="42" />
+		<Cursor position="1315" topLine="28" />
 	</File>
-	<File name="View.h" open="1" top="0" tabpos="4">
+	<File name="View.h" open="0" top="0" tabpos="4">
 		<Cursor position="0" topLine="4" />
 	</File>
-	<File name="detect.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="234" topLine="0" />
+	<File name="common.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="1221" topLine="0" />
 	</File>
-	<File name="modelise.cpp" open="1" top="0" tabpos="5">
-		<Cursor position="841" topLine="2" />
+	<File name="common.h" open="1" top="0" tabpos="2">
+		<Cursor position="131" topLine="0" />
 	</File>
-	<File name="sod.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="302" topLine="0" />
+	<File name="detect.cpp" open="1" top="1" tabpos="3">
+		<Cursor position="2647" topLine="0" />
 	</File>
-	<File name="sod.h" open="1" top="0" tabpos="2">
-		<Cursor position="80" topLine="0" />
+	<File name="modelise.cpp" open="0" top="0" tabpos="5">
+		<Cursor position="841" topLine="4" />
+	</File>
+	<File name="sod.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="267" topLine="58" />
+	</File>
+	<File name="sod.h" open="0" top="0" tabpos="2">
+		<Cursor position="155" topLine="0" />
 	</File>
 	<File name="som.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="15" />
+		<Cursor position="602" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
